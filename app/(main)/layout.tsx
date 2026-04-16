@@ -55,7 +55,7 @@ export default async function MainLayout({
         <div className="sidebar-inner">
           <div className="logo-container">
             <Link href="/">
-              <span className="logo-text">ExecOS</span>
+              <span className="logo-text">ExecPilot</span>
             </Link>
           </div>
           <nav className="sidebar-nav">

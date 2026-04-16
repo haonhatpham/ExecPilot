@@ -21,7 +21,7 @@ export default function Home() {
         <div className="landing-header-inner">
           <div className="logo-container">
             <Link href="/">
-              <span className="logo-text">ExecOS</span>
+              <span className="logo-text">ExecPilot</span>
             </Link>
             <Show when="signed-in">
               <div className="nav-actions">

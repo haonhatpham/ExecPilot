@@ -2,11 +2,6 @@ import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
 import {
   ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
 } from "@clerk/nextjs";
 import { shadcn } from "@clerk/themes";
 import "./globals.css";
@@ -17,7 +12,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "ExecOS - AI Executive Assistant",
+  title: "ExecPilot - AI Executive Assistant",
   description: "Your autonomous AI assistant for email and calendar management",
 };
 
@@ -27,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ baseTheme: shadcn }}>
+    <ClerkProvider appearance={{ theme: shadcn }}>
       <html lang="en">
         <body
           className={`${montserrat.className} antialiased`}
@@ -37,7 +32,7 @@ export default function RootLayout({
           <footer className="footer-wrapper">
             <div className="section-heading">
               <p className="text-center text-sm text-muted-foreground">
-                © {new Date().getFullYear()} ExecOS.
+                © {new Date().getFullYear()} ExecPilot.
               </p>
             </div>
           </footer>
