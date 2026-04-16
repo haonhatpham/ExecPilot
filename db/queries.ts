@@ -28,9 +28,19 @@ export async function getOrCreateUser(
     return existing;
   }
 
+  // Race-safe: in dev (and sometimes prod), multiple parallel renders/requests
+  // can attempt to create the same Clerk user. Make this operation idempotent.
   const [user] = await db
     .insert(users)
     .values({ clerkId, email, name: name ?? null })
+    .onConflictDoUpdate({
+      target: users.clerkId,
+      set: {
+        email,
+        name: name ?? null,
+        updatedAt: new Date(),
+      },
+    })
     .returning();
 
   return user;
@@ -74,6 +84,15 @@ export async function upsertIntegration(data: {
     .values(data)
     .returning({ id: integrations.id });
   return result.id;
+}
+
+export async function disconnectIntegration(userId: string, provider: GoogleProvider) {
+  const [deleted] = await db
+    .delete(integrations)
+    .where(and(eq(integrations.userId, userId), eq(integrations.provider, provider)))
+    .returning({ id: integrations.id });
+
+  return deleted?.id ?? null;
 }
 
 export async function getUserIntegrations(userId: string) {
